@@ -14,23 +14,33 @@
 
     if (isset($_GET["eliminar"])) {
         $id_tarea = $_GET["eliminar"];
-        TareaModel::Eliminar($id);
-        header("Location: " . ROOT . "/Views/tareas");
+        $success = TareasModel::eliminarTarea($id_tarea);
+        if (!$success) {
+            echo '
+            <div class="error">
+            <a class="close-pop-up-error" href="#"><i class="fa-solid fa-xmark"></i></a>
+                <h3>No se pudo eliminar la tarea debido a que está enlazada a un empleado</h3>
+            </div>';
+            
+        } else {
+            header("Location: " . ROOT . "/Views/tareas");
         }
-        if (isset($_POST["actualizarTarea"])) {
+        }
+
+    if (isset($_POST["actualizarTarea"])) {
         $titulo = $_POST["titulo"];
         $horas = $_POST["horas"];
         $id_tarea = $_GET["actualizar"];
-        TareaModel::Actualizar($id_tarea, $titulo, $horas);
+        TareasModel::editarTarea($id_tarea, $titulo, $horas);
         header("Location: " . ROOT . "/Views/tareas");
-        }
-        function Actualizar() {
+    }
+    function Actualizar() {
         if (isset($_GET["actualizar"])) {
         $id = $_GET["actualizar"];
         $_POST["id_tarea"] = $id_tarea;
-        return TareaModel::Obtener($id_tarea);
-        }
-        }
+        return TareasModel::obtenerTareas($id_tarea);
+    }
+    }
 
     function mostrarTareas() {
         $tareas = TareasModel::obtenerTareas(); 
@@ -45,7 +55,7 @@
                         <a href="' . ROOT . "/Views/tareas?eliminar=" . $tarea["id_tarea"]  . '" class="delete-empleado">
                             <i class="fa-solid fa-trash"></i>
                         </a>
-                        <a href="' . ROOT . "/Views/tareas/agregartareas.php?actualizar=" . $tarea["id_tarea"]  . '" class="edit-empleado">
+                        <a href="' . ROOT . "/Views/tareas/modificar.php?actualizar=" . $tarea["id_tarea"]  . '" class="edit-empleado">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
                     </div>
@@ -53,4 +63,15 @@
         }
         echo '</div>';
     }
+    function Modificar() {
+    
+    
+        if (isset($_GET["actualizar"])) {
+            $id = $_GET["actualizar"];
+            $_POST["id"] = $id;
+            return TareasModel::Obtener($id);
+        }
+    }
+
+?> 
 

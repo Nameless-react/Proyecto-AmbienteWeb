@@ -79,6 +79,7 @@ class ProyectoController {
             return $template . '
                 <div class="opciones-proyecto">
                     <a href="' . ROOT . "/Views/proyectos/modificarproyecto.php?id_proyecto=" . $id . '" class="modificar-proyecto">Modificar Proyecto</a>
+                    <a class="reporte-proyecto">Reportes</a>
                     <a onclick="deleteProyecto()" class="eliminar-proyecto">Eliminar Proyecto</a>
                 </div>
                 </div>
@@ -183,6 +184,7 @@ class ProyectoController {
         $diferencia = $fechaInicio->diff($fechaFin);
         
         foreach($horas as $hora) {
+        
             if(isset($hora["horas"]) && is_numeric($hora["horas"])) {
                 $totalHoras += $hora["horas"];
             }

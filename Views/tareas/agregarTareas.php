@@ -5,15 +5,14 @@ include_once(MODELS_PATH . "/tareasModel.php");
 // Manejar la adición de una nueva tarea
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Crear una instancia del modelo de tareas
-    $tareasModel = new Tarea($this->connectDB()); 
+    
     
     // Obtener los datos del formulario
     $titulo = $_POST['titulo'];
     $horas = $_POST['horas'];
-    $id_empleado = $_POST['id_empleado'];
 
     // Agregar la tarea utilizando el modelo
-    $tareasModel->agregarTareas($titulo, $horas, $id_empleado);
+    TareasModel::crearTarea($titulo, $horas);
 
     // Redireccionar a la página principal después de agregar la tarea
     header('Location: index.php');

@@ -121,13 +121,14 @@ class ProyectoModel {
 
     public static function Borrar($id) {
         $database = OpenDataBase();
+        $stmt = $database->prepare("DELETE FROM Proyectos_Empleados WHERE id_proyecto = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        
         $stmt = $database->prepare("DELETE FROM Proyectos WHERE id_proyecto = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
         
-        $stmt = $database->prepare("DELETE FROM Proyectos_Empleados WHERE id_proyecto = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
         
         
         closeDataBase($database);
@@ -157,7 +158,7 @@ class ProyectoModel {
         $stmt->bind_param("i", $idProyecto);
         $stmt->execute();
         $result = $stmt->get_result();
-        $horas = $result->fetch_assoc();
+        $horas = $result->fetch_all(MYSQLI_ASSOC);
         closeDataBase($database);
         return $horas;
 

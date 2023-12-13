@@ -2,11 +2,11 @@
     include_once("database.php");
     class TareasModel {
         
-        public function crearTarea ($titulo, $horas, $id_empleado) {
+        public function crearTarea ($titulo, $horas) {
             $database = OpenDataBase();
-            $stmt = $database->prepare("INSERT INTO Tareas(titulo, horas, id_empleado) VALUES (?, ?, ?)");
+            $stmt = $database->prepare("INSERT INTO Tareas(titulo, horas) VALUES (?, ?)");
             
-            $stmt->bind_param("sii", $titulo, $horas, $id_empleado);
+            $stmt->bind_param("si", $titulo, $horas);
             $stmt->execute();
             closeDataBase($database);
         }
@@ -20,16 +20,20 @@
         }
 
 
-        public function eliminarTarea($id) {
+        public static function eliminarTarea($id) {
             $database = OpenDataBase();
             $stmt = $database->prepare("DELETE FROM Tareas WHERE id_tarea = ?");
             $stmt->bind_param("i", $id);
-            $stmt->execute();
+            $success = $stmt->execute();
+            
             closeDataBase($database);
+        
+            return $success;
         }
+        
 
         // Funcion de editarTarea con su preparacion, contruccion y ejecucion de consulta SQL
-        public function editarTarea($id_tarea, $titulo, $horas, $id_empleado) {
+        public function editarTarea($id_tarea, $titulo, $horas) {
             $sql = "UPDATE Tareas SET ";
             $params = array();
             $paramTypes = "";
@@ -44,7 +48,7 @@
             $sql .= join(", ", $params);
             $sql .= " WHERE id_tarea = ?";
             $paramTypes .= "i";
-            $paramValues = array_filter([$titulo, $horas, $id_empleado, $id_tarea], function ($value) {
+            $paramValues = array_filter([$titulo, $horas, $id_tarea], function ($value) {
             return $value !== null;
             });
             $database = OpenDataBase();
@@ -61,6 +65,17 @@
             $stmt->close();
             closeDataBase($database);
             }
+
+    public static function Obtener($id) {
+        $database = OpenDataBase();
+        $stmt = $database->prepare("SELECT * FROM Tareas WHERE id_tarea = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $tarea = $result->fetch_assoc();
+        closeDataBase($database);
+        return $tarea;
+    }
 
 }
 

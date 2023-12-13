@@ -308,7 +308,7 @@ select {
     text-align: center;
 }
 
-.form-empleados button, .boton-usuarios, .role-btn, .inner-container-agregar-empleado-proyecto button,  .proyectos-agregar-form button, .tareas-form button, .inner-container-agregar-tarea-empleado-proyecto button {
+.form-empleados button, .boton-usuarios, .role-btn, .inner-container-agregar-empleado-proyecto button,  .proyectos-agregar-form button, .tareas-form button, .inner-container-agregar-tarea-empleado-proyecto button, .boton-tarea {
     border: none;
     outline: none;
     background: var(--blue);
@@ -324,7 +324,7 @@ select {
     width: fit-content;
 }
 
-.form-empleados button:hover, .boton-usuarios:hover, .tareas-form button:hover, .role-btn:hover, .inner-container-agregar-empleado-proyecto button:hover, .proyectos-agregar-form button:hover, .inner-container-agregar-tarea-empleado-proyecto button:hover {
+.form-empleados button:hover, .boton-usuarios:hover, .tareas-form button:hover, .role-btn:hover, .inner-container-agregar-empleado-proyecto button:hover, .proyectos-agregar-form button:hover, .inner-container-agregar-tarea-empleado-proyecto button:hover, .boton-tarea {
     transform: translateY(-10%) scale(1.01);
 }
 
@@ -434,6 +434,29 @@ select {
 }
 
 
+.error {
+    position: absolute;
+    backdrop-filter: blur(4px);
+    background-color: #7772;
+    width: 40%;
+    border-radius: 20px;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    inset: 30% 30%;
+    z-index: 2;
+    padding: 2.5em 2em;
+    transition: all .5s ease-in-out;
+    gap: 5rem;
+}
+
+.error h3 {
+    text-align: center;
+}
+
+
 /* -------------------- */
 
 /* Botón de atrás */
@@ -536,7 +559,7 @@ th {
     flex-direction: column;
 }
 
-.inner-container-agregar-empleado-proyecto a, .inner-container-agregar-tarea-empleado-proyecto a, .inner-reporte a {
+.inner-container-agregar-empleado-proyecto a, .inner-container-agregar-tarea-empleado-proyecto a, .inner-reporte a, .close-pop-up-error {
     align-self: flex-start;
     font-size: 2.5rem;
     cursor: pointer;
@@ -662,17 +685,12 @@ th {
     
 }
 
-.pop-up-agregar-tarea-empleados-proyecto.close {
+.pop-up-agregar-tarea-empleados-proyecto.close, .pop-up-agregar-empleados-proyecto.close, .pop-up-reporte.close, .error.close {
     transform: translateY(7%);
     opacity: 0;
     z-index: -100;
 }
 
-.pop-up-reporte.close {
-    transform: translateY(7%);
-    opacity: 0;
-    z-index: -100;
-}
 
 .proyecto-empleado-info {
     display: flex;

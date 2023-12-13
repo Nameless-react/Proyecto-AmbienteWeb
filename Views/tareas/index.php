@@ -32,7 +32,15 @@
 
                 burger.classList.toggle("close");
             })
+
+            const closeError = document.querySelector(".close-pop-up-error");
+            const modalReporte = document.querySelector(".error")
+            if (closeError) {
+                closeError.addEventListener("click", () => {
+                modalReporte.classList.add("close");
+                })
+            } 
           </script>
-      </body>
-    </html>
+    </body>
+</html>
 
